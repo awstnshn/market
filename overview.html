@@ -1,314 +1,396 @@
-<!-- Kaizen Market Overview – Landing Page (static HTML) -->
+<!-- Kaizen Market Overview – Landing Page (updated with nav) -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kaizen | Market Overview</title>
-  <!-- === Fonts === -->
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-  <!-- Integral CF is not on Google Fonts – we pull from cdnfonts.com (public, free weight) -->
-  <link href="https://fonts.cdnfonts.com/css/integral-cf" rel="stylesheet" />
-  <!-- === Base Styles === -->
-  <style>
-    :root {
-      /* Palette */
-      --bg-primary: #0e0f12;
-      --bg-card: #0b0c0f;
-      --border-card: rgba(255, 255, 255, 0.06);
-      --txt-primary: #ffffff;
-      --txt-secondary: #d1d1d3;
-      --txt-muted: #6a6b7f;
-      --accent-pos-bg: rgba(43, 178, 119, 0.12);
-      --accent-pos-txt: #2ecb8d;
-      --accent-neg-bg: rgba(255, 99, 99, 0.12);
-      --accent-neg-txt: #ff6464;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kaizen | Market Overview</title>
+    <!-- === Fonts === -->
+    <link href="https://fonts.cdnfonts.com/css/integral-cf" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <!-- === Base Styles === -->
+    <style>
+        :root {
+            /* Palette */
+            --bg-primary: #0e0f12;
+            --bg-card: #0b0c0f;
+            --border-card: rgba(255, 255, 255, 0.06);
+            --txt-primary: #ffffff;
+            --txt-secondary: #d1d1d3;
+            --txt-muted: #6a6b7f;
+            --accent-pos-bg: rgba(43, 178, 119, 0.12);
+            --accent-pos-txt: #2ecb8d;
+            --accent-neg-bg: rgba(255, 99, 99, 0.12);
+            --accent-neg-txt: #ff6464;
+        }
 
-    /* Resets */
-    *, *::before, *::after { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg-primary);
-      color: var(--txt-primary);
-      -webkit-font-smoothing: antialiased;
-    }
-    img { display: block; max-width: 100%; }
-    a { color: inherit; text-decoration: none; }
+        /* Resets */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
 
-    /* Typography helpers */
-    .headline-primary {
-      font-family: 'Integral CF', sans-serif;
-      font-size: clamp(2.2rem, 4vw + 1rem, 3.6rem);
-      font-weight: 700;
-      line-height: 1.1;
-    }
-    .headline-secondary {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 600;
-      font-size: clamp(1.2rem, 2vw + 0.5rem, 1.8rem);
-      line-height: 1.2;
-      color: var(--txt-primary);
-    }
-    .headline-tertiary {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      font-size: 1rem;
-      color: var(--txt-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    p { font-size: 1rem; font-weight: 400; line-height: 1.6; color: var(--txt-secondary); }
+        body {
+            margin: 0;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--txt-primary);
+            -webkit-font-smoothing: antialiased;
+        }
 
-    /* Layout */
-    .container {
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    section {
-      padding: 80px 0;
-    }
+        img {
+            display: block;
+            max-width: 100%;
+        }
 
-    /* Card wrapper shared across sections */
-    .data-card {
-      width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-card);
-      border-radius: 16px;
-      padding: 32px 24px;
-      overflow-x: auto;
-    }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-    /* Data table */
-    .data-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0 10px;
-      font-size: 0.9rem;
-    }
-    .data-table thead th {
-      text-align: left;
-      font-weight: 600;
-      padding-bottom: 10px;
-      color: var(--txt-muted);
-      font-size: 0.75rem;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-    .data-table tbody tr {
-      background: var(--bg-primary);
-      border-radius: 12px;
-    }
-    .data-table tbody tr td {
-      padding: 12px 16px;
-      white-space: nowrap;
-    }
-    .asset {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--txt-primary);
-      font-weight: 500;
-    }
-    .asset img {
-      width: 18px; height: 18px;
-      border-radius: 6px;
-    }
-    .num {
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-      color: var(--txt-secondary);
-    }
-    .bubble {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-weight: 600;
-      font-size: 0.8rem;
-    }
-    .bubble.pos { background: var(--accent-pos-bg); color: var(--accent-pos-txt); }
-    .bubble.neg { background: var(--accent-neg-bg); color: var(--accent-neg-txt); }
+        /* Typography helpers */
+        .headline-primary {
+            font-family: 'Integral CF', sans-serif;
+            font-size: clamp(2.8rem, 4vw + 2.4rem, 3.6rem);
+            font-weight: 700;
+            line-height: 1.1;
+        }
 
-    /* Fancy gradient overlay for hero */
-    .hero {
-      position: relative;
-      isolation: isolate;
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient( circle at 30% 30%, rgba(36,49,108,0.6), transparent 60% );
-      opacity: 0.8;
-      z-index: -1;
-    }
-  </style>
+        .headline-secondary {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.6rem, 2vw + 0.5rem, 1.8rem);
+            line-height: 1.2;
+            color: var(--txt-primary);
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.6;
+            color: var(--txt-secondary);
+        }
+
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* ---------- Top navigation ---------- */
+        .top-nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 24px 0;
+            z-index: 10;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .site-logo img {
+            height: 42px;
+            width: auto;
+            max-width: 160px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--txt-secondary);
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--txt-primary);
+        }
+
+        /* Card wrapper shared across sections */
+        .data-card {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 32px 24px;
+            overflow-x: auto;
+        }
+
+        /* ---------- Data table (flat rows + separators) ---------- */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .data-table thead th {
+            text-align: left;
+            font-weight: 600;
+            padding: 12px 16px;
+            color: #eee;
+            font-size: 0.75rem;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .data-table tbody tr {
+            background: transparent;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .data-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .data-table tbody td {
+            padding: 12px 16px;
+            white-space: nowrap;
+        }
+
+        .asset {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--txt-primary);
+            font-weight: 500;
+        }
+
+        .asset img {
+            width: 18px;
+            height: 18px;
+            border-radius: 6px;
+        }
+
+        .num {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            color: var(--txt-secondary);
+        }
+
+        .bubble {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .bubble.pos {
+            background: var(--accent-pos-bg);
+            color: var(--accent-pos-txt);
+        }
+
+        .bubble.neg {
+            background: var(--accent-neg-bg);
+            color: var(--accent-neg-txt);
+        }
+
+        /* Fancy gradient overlay for hero */
+        .hero-gradient {
+            position: relative;
+            isolation: isolate;
+            background-color: hsla(0, 0%, 0%, 1);
+            /* gradient rules omitted for brevity – keep previous animation */
+        }
+    </style>
 </head>
+
 <body>
-  <!-- ================= HERO ================= -->
-  <header>
-    <div class="container" style="padding-top:120px;padding-bottom:120px;text-align:center;">
-      <h1 class="headline-primary">Market&nbsp;Overview</h1>
-      <p style="max-width:640px;margin:16px auto 0;">Tracking majors, macro, movers, and mind-share – updated daily by the Kaizen research desk.</p>
-    </div>
-  </header>
-  
-  <!-- =============== SECTION: Majors & Macro =============== -->
-  <section id="majors">
-    <div class="container">
-      <h2 class="headline-secondary">Majors &amp; Macro</h2>
-      <div class="data-card" style="margin-top:24px;">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Asset</th>
-              <th style="text-align:right;">Price</th>
-              <th style="text-align:right;">24H</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <div class="asset">
-                  <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCBTC.svg" alt="BTC" />
-                  Bitcoin
+    <!-- ================= HERO ================= -->
+    <header class="hero-gradient">
+        <nav class="top-nav">
+            <div class="container nav-inner">
+                <a class="site-logo" href="/">
+                    <img src="/assets/img/logo-light.jpeg" alt="Kaizen logo">
+                </a>
+                <div class="nav-links">
+                    <a href="#majors">Majors</a>
+                    <a href="#movers">Gainers</a>
+                    <a href="#flows">Flows</a>
+                    <a href="#mindshare">Mind‑Share</a>
                 </div>
-              </td>
-              <td class="num">$63,842.12</td>
-              <td class="num"><span class="bubble pos">+2.14%</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="asset">
-                  <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCETH.svg" alt="ETH" />
-                  Ethereum
-                </div>
-              </td>
-              <td class="num">$3,142.55</td>
-              <td class="num"><span class="bubble neg">-0.82%</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="asset">
-                  <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCSOL.svg" alt="SOL" />
-                  Solana
-                </div>
-              </td>
-              <td class="num">$142.77</td>
-              <td class="num"><span class="bubble pos">+4.23%</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="asset">
-                  <img src="https://s3-symbol-logo.tradingview.com/indices/s-and-p-500--big.svg" alt="SPX" />
-                  S&amp;P&nbsp;500
-                </div>
-              </td>
-              <td class="num">5,275.43</td>
-              <td class="num"><span class="bubble pos">+0.16%</span></td>
-            </tr>
-            <tr>
-              <td>
-                <div class="asset">
-                  <img src="https://s3-symbol-logo.tradingview.com/metal/gold--big.svg" alt="Gold" />
-                  Gold&nbsp;(oz)
-                </div>
-              </td>
-              <td class="num">$2,358.20</td>
-              <td class="num"><span class="bubble neg">-0.45%</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+            </div>
+        </nav>
 
-  <!-- =============== SECTION: 24h Gainers & Losers =============== -->
-  <section id="movers">
-    <div class="container">
-      <h2 class="headline-secondary">24-Hour Gainers &amp; Losers</h2>
-      <div class="data-card" style="margin-top:24px;">
-        <table class="data-table" style="min-width:620px;">
-          <thead>
-            <tr>
-              <th>Token</th>
-              <th style="text-align:right;">Price</th>
-              <th style="text-align:right;">24H</th>
-              <th style="text-align:right;">7D</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><div class="asset"><img src="https://s3-symbol-logo.tradingview.com/crypto/PLSU.svg" alt="PLSU" />PulseUnity</div></td>
-              <td class="num">$0.0134</td>
-              <td class="num"><span class="bubble pos">+138%</span></td>
-              <td class="num"><span class="bubble pos">+231%</span></td>
-            </tr>
-            <tr>
-              <td><div class="asset"><img src="https://s3-symbol-logo.tradingview.com/crypto/PEPE.svg" alt="PEPE" />Pepe</div></td>
-              <td class="num">$0.000012</td>
-              <td class="num"><span class="bubble neg">-24%</span></td>
-              <td class="num"><span class="bubble pos">+45%</span></td>
-            </tr>
-            <!-- Add more rows as you like -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+        <div class="container" style="padding-top:140px;padding-bottom:120px;text-align:center;">
+            <h1 class="headline-primary">Market&nbsp;Overview</h1>
+            <p style="max-width:640px;margin:16px auto 0;font-size:24px;font-weight:bold;color:white;">Tracking the market movers, majors, and onchain - updated daily by the Kaizen Research Team.</p>
+        </div>
+    </header>
 
-  <!-- =============== SECTION: On-Chain Flows =============== -->
-  <section id="flows">
-    <div class="container">
-      <h2 class="headline-secondary">On-Chain Flows</h2>
-      <p style="margin-top:8px;max-width:640px;">Whale wallet movements and aggregated stable-coin flows tell us where the liquidity is heading. Watch for sharp inflows as a leading indicator of momentum shifts.</p>
-      <div class="data-card" style="margin-top:24px;">
-        <!-- Placeholder graphic: replace with chart / screenshot generator of your choice -->
-        <img src="https://placehold.co/960x320/0b0c0f/aaaaaa?text=On-Chain+Flows+Chart" alt="Flows Chart" style="border-radius:12px;width:100%;height:auto;" />
-      </div>
-    </div>
-  </section>
+    <!-- =============== SECTION: Majors & Macro =============== -->
+    <section id="majors">
+        <div class="container">
+            <h2 class="headline-secondary">Majors &amp; Macro</h2>
+            <div class="data-card" style="margin-top:24px;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th style="text-align:right;">Price</th>
+                            <th style="text-align:right;">24H</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="asset">
+                                    <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCBTC.svg" alt="BTC" />
+                                    Bitcoin
+                                </div>
+                            </td>
+                            <td class="num">$63,842.12</td>
+                            <td class="num"><span class="bubble pos">+2.14%</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset">
+                                    <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCETH.svg" alt="ETH" />
+                                    Ethereum
+                                </div>
+                            </td>
+                            <td class="num">$3,142.55</td>
+                            <td class="num"><span class="bubble neg">-0.82%</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset">
+                                    <img src="https://s3-symbol-logo.tradingview.com/crypto/XTVCSOL.svg" alt="SOL" />
+                                    Solana
+                                </div>
+                            </td>
+                            <td class="num">$142.77</td>
+                            <td class="num"><span class="bubble pos">+4.23%</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset">
+                                    <img src="https://s3-symbol-logo.tradingview.com/indices/s-and-p-500--big.svg" alt="SPX" />
+                                    S&amp;P&nbsp;500
+                                </div>
+                            </td>
+                            <td class="num">5,275.43</td>
+                            <td class="num"><span class="bubble pos">+0.16%</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset">
+                                    <img src="https://s3-symbol-logo.tradingview.com/metal/gold--big.svg" alt="Gold" />
+                                    Gold&nbsp;(oz)
+                                </div>
+                            </td>
+                            <td class="num">$2,358.20</td>
+                            <td class="num"><span class="bubble neg">-0.45%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-  <!-- =============== SECTION: Narrative Mind-Share =============== -->
-  <section id="mindshare">
-    <div class="container">
-      <h2 class="headline-secondary">Narrative Mind-Share</h2>
-      <p style="margin-top:8px;max-width:640px;">Twitter, Reddit, and Telegram mentions aggregated into a single signal. <span style="color:#8c8d9b;">(Higher scores = louder chatter.)</span></p>
-      <div class="data-card" style="margin-top:24px;">
-        <table class="data-table" style="min-width:540px;">
-          <thead>
-            <tr>
-              <th>Narrative</th>
-              <th style="text-align:right;">Score</th>
-              <th style="text-align:right;">Δ 24H</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><div class="asset"><img src="https://placehold.co/18x18/f97316/f97316.png" alt="AI" />AI Tokens</div></td>
-              <td class="num">87</td>
-              <td class="num"><span class="bubble pos">+9</span></td>
-            </tr>
-            <tr>
-              <td><div class="asset"><img src="https://placehold.co/18x18/4fd1c5/4fd1c5.png" alt="Memes" />Memecoins</div></td>
-              <td class="num">71</td>
-              <td class="num"><span class="bubble neg">-4</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+    <!-- =============== SECTION: 24h Gainers & Losers =============== -->
+    <section id="movers">
+        <div class="container">
+            <h2 class="headline-secondary">24-Hour Gainers &amp; Losers</h2>
+            <div class="data-card" style="margin-top:24px;">
+                <table class="data-table" style="min-width:620px;">
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th style="text-align:right;">Price</th>
+                            <th style="text-align:right;">24H</th>
+                            <th style="text-align:right;">7D</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="asset"><img src="https://s3-symbol-logo.tradingview.com/crypto/PLSU.svg" alt="PLSU" />PulseUnity</div>
+                            </td>
+                            <td class="num">$0.0134</td>
+                            <td class="num"><span class="bubble pos">+138%</span></td>
+                            <td class="num"><span class="bubble pos">+231%</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset"><img src="https://s3-symbol-logo.tradingview.com/crypto/PEPE.svg" alt="PEPE" />Pepe</div>
+                            </td>
+                            <td class="num">$0.000012</td>
+                            <td class="num"><span class="bubble neg">-24%</span></td>
+                            <td class="num"><span class="bubble pos">+45%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 
-  <!-- ================= FOOTER ================= -->
-  <footer style="padding:60px 0;text-align:center;font-size:0.8rem;color:var(--txt-muted);">
-    <div class="container">
-      <p>Built with ❤️  by the Kaizen research team. Data provided by CoinGecko, Nansen, and Yahoo Finance.</p>
-      <p style="margin-top:12px;">© 2025 Kaizen Crypto. All rights reserved.</p>
-    </div>
-  </footer>
-</body>
-</html>
+    <!-- =============== SECTION: On-Chain Flows =============== -->
+    <section id="flows">
+        <div class="container">
+            <h2 class="headline-secondary">On-Chain Flows</h2>
+            <p style="margin-top:8px;max-width:640px;">Whale wallet movements and aggregated stable-coin flows tell us where the liquidity is heading. Watch for sharp inflows as a leading indicator of momentum shifts.</p>
+            <div class="data-card" style="margin-top:24px;">
+                <img src="https://placehold.co/960x320/0b0c0f/aaaaaa?text=On-Chain+Flows+Chart" alt="Flows Chart" style="border-radius:12px;width:100%;height:auto;" />
+            </div>
+        </div>
+    </section>
+
+    <!-- =============== SECTION: Narrative Mind-Share =============== -->
+    <section id="mindshare">
+        <div class="container">
+            <h2 class="headline-secondary">Narrative Mind-Share</h2>
+            <p style="margin-top:8px;max-width:640px;">Twitter, Reddit, and Telegram mentions aggregated into a single signal. <span style="color:#8c8d9b;">(Higher scores = louder chatter.)</span></p>
+            <div class="data-card" style="margin-top:24px;">
+                <table class="data-table" style="min-width:540px;">
+                    <thead>
+                        <tr>
+                            <th>Narrative</th>
+                            <th style="text-align:right;">Score</th>
+                            <th style="text-align:right;">Δ 24H</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="asset"><img src="https://placehold.co/18x18/f97316/f97316.png" alt="AI" />AI Tokens</div>
+                            </td>
+                            <td class="num">87</td>
+                            <td class="num"><span class="bubble pos">+9</span></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="asset"><img src="https://placehold.co/18x18/4fd1c5/4fd1c5.png" alt="Memes" />Memecoins</div>
+                            </td>
+                            <td class="num">71</td>
+                            <td class="num"><span class="bubble neg">-4</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer style="padding:60px 0;text-align:center;font-size:0.8rem;color:var(--txt-muted);">
+        <div class
